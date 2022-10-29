@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+
+{% block content %}
+<hr>
+<h1>{{ title }} </h1>
+
+<hr>
+<div class="w-75 mx-auto">
+
+
+<form method="post">
+        <table>
+    {% csrf_token %}
+    {{ form.as_table }}
+        </table>
+    <button type="submit" class="btn btn-primary">Update part</button>
+</form>
+</div>
+
+
+
+{% endblock %}

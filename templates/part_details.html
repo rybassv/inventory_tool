@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ part.part_id.part_name }} Details {% endblock %}
+
+
+
+{% block content %}
+
+
+
+    {% if transaction_list %}
+
+    <div class="w-75 mx-auto">
+<hr>
+<h2>{{ part.part_id.part_name }} details</h2>
+<hr>
+    <table class="table">
+         <thead class="table-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Part name</th>
+            <th scope="col">Income</th>
+            <th scope="col">Usage</th>
+            <th scope="col">Transaction date</th>
+            </tr>
+  </thead>
+  <tbody>
+        {% for row in transaction_list %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{ row.part.part_name }}</td>
+      <td>{{ row.income }}</td>
+      <td>{{ row.usage }}</td>
+      <td>{{ row.transaction_date }}</td>
+    </tr>
+        {% endfor %}
+
+    <tr>
+        <td colspan="4"><strong>Total part usage, {{ context.2 }}</strong></td>
+      <td>{{ context.1 }}</td>
+    </tr>
+    <tr>
+      <td colspan="4"><strong>Total part income, {{ context.2 }}</strong></td>
+      <td>{{ context.0 }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<form method="post" action="{% url 'inventory:inventory' %}">
+        <table>
+    {% csrf_token %}
+    {{ form.as_table }}
+        </table>
+    <button type="submit" class="btn btn-primary">Add part</button>
+</form>
+    </div>
+
+
+
+{% endblock %}

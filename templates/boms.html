@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+
+{% block content %}
+
+    {% if object_list %}
+
+<div class="w-75 mx-auto">
+<hr>
+<h2>{{ title }}</h2>
+<hr>
+<table class="table">
+   <thead class="table-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">BOM name</th>
+            <th scope="col">Part types needed</th>
+            </tr>
+  </thead>
+
+  <tbody>
+   {% for bom in object_list %}
+    <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td><a href="{% url 'inventory:edit_bom' bom.id %}">{{ bom.blueprint_name }} BOM</a></td>
+        <td>{{ bom.num_parts }}</td>
+
+    </tr>
+   {% endfor %}
+  </tbody>
+</table>
+    {% else %}
+       <p><strong>BOM list is empty</strong></p>
+    {% endif %}
+    </div>
+
+
+
+
+{% endblock %}

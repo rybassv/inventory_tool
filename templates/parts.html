@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ menu.3.title }} {% endblock %}
+
+
+
+{% block content %}
+
+
+
+    {% if part_list %}
+
+    <div class="w-75 mx-auto">
+<hr>
+<h2>{{ menu.3.title }}</h2>
+<hr>
+    <table class="table">
+         <thead class="table-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Part name</th>
+            <th scope="col">Measure unit</th>
+            <th scope="col">Part URL</th>
+            <th scope="col"></th>
+            </tr>
+  </thead>
+  <tbody>
+        {% for part in part_list %}
+
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td><a href="{% url 'inventory:part_update' part.id %}">{{ part.part_name }}</a> </td>
+      <td>{{ part.measure_unit }}</td>
+      <td><a href="{{ part.url }}">Link</a> </td>
+      <td><a class="btn" href="{% url 'inventory:delete_record' menu.3.title|lower  part.id %}" role="button">❌</a></td>
+    </tr>
+
+        {% endfor %}
+
+    </tbody>
+</table>
+
+    {% else %}
+        Part list is empty
+    {% endif %}
+
+<br>
+
+<form method="post" action="{% url 'inventory:parts' %}">
+        <table>
+    {% csrf_token %}
+    {{ form.as_table }}
+        </table>
+    <button type="submit" class="btn btn-primary">Add part</button>
+</form>
+
+</div>
+
+
+{% endblock %}

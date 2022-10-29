@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ menu.1.title }}  {% endblock %}
+
+
+{% block content %}
+
+<div class="w-75 mx-auto">
+<hr>
+<h2>{{ menu.1.title }}</h2>
+<hr>
+    {% if blueprints_list %}
+
+<table class="table">
+  <thead class="table-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Blueprint name</th>
+            <th scope="col"></th>
+            </tr>
+  </thead>
+  <tbody>
+        {% for blueprint in blueprints_list %}
+        <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{ blueprint.blueprint_name }}</td>
+        <td><a class="btn" href="{% url 'inventory:delete_record' menu.1.title|lower  blueprint.id %}" role="button">❌</a></td>
+
+        </tr>
+
+        {% endfor %}
+  </tbody>
+</table>
+            {% else %}
+        <p> <strong>Blueprints list is empty </strong></p>
+    {% endif %}
+
+<form method="post" action="{% url 'inventory:blueprints' %}">
+        <table>
+    {% csrf_token %}
+    {{ form.as_table }}
+        </table>
+    <button type="submit" class="btn btn-primary">Create blueprint</button>
+</form>
+</div>
+
+
+{% endblock %}

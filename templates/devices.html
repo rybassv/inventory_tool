@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ menu.0.title }} {% endblock %}
+
+
+
+{% block content %}
+
+    {% if device_list %}
+
+    <div class="w-75 mx-auto">
+    <hr>
+        <h2>{{ menu.0.title }} </h2>
+    <hr>
+    <table class="table">
+         <thead class="table-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Device name</th>
+            <th scope="col">Production date</th>
+            <th scope="col">Total parts price</th>
+            <th scope="col"></th>
+            </tr>
+  </thead>
+  <tbody>
+
+        {% for device in device_list %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{ device.blueprint.blueprint_name }}</td>
+      <td>{{ device.production_date }}</td>
+      <td>{{ device.parts_price }}</td>
+      <td><a class="btn" href="{% url 'inventory:delete_record' menu.0.title|lower device.id %}" role="button">❌</a></td>
+    </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    {% else %}
+        <p><strong>Device list is empty</strong></p>
+    {% endif %}
+
+<form method="post" action="{% url 'inventory:devices' %}">
+        <table>
+    {% csrf_token %}
+    {{ form.as_table }}
+        </table>
+    <button type="submit" class="btn btn-primary">Create device</button>
+</form>
+</div>
+
+
+{% endblock %}
